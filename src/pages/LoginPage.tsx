@@ -1,21 +1,27 @@
 import { useForm } from "react-hook-form"
 import { useAuth } from "../hooks/useAuth"
-import type { LoginRequest } from "../types/auth";
 import { useNavigate } from "react-router-dom"
 import { authApi } from "../api/authApi";
+import { useMutation } from "@tanstack/react-query";
+import type { LoginRequest ,LoginResponse} from "../types/auth";
+import { AxiosError } from "axios";
+import type { ApiError } from "../api/api";
 
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>();
     const { login } = useAuth();
     const navigate = useNavigate();
-    const onSubmit=async(data:LoginRequest)=>{
-        const response=await authApi.login(date);
-        login(response)
-        navigate("/");
-    }
 
-    return <form onSubmit={handleSubmit(onSubmit)}>
+    const { mutate, isPending, error } = useMutation<LoginResponse, AxiosError<ApiError>, LoginRequest>({
+        mutationFn: (data) => authApi.login(data),
+        onSuccess: (data) => {
+            login(data);
+            navigate("/");
+        }
+    })
+
+    return <form onSubmit={handleSubmit(data=>mutate(data))}>
         <div>
             <label htmlFor="email">מייל</label>
             <input id="email" type="email" {...register("email", { required: "יש להזין כתובת מייל ", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "כתובת מייל אינה תקינה" } })} />

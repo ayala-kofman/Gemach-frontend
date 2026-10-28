@@ -29,7 +29,7 @@ export const upDataGemach=async(id:number,data:Partial<gemachRequest>):Promise<G
 export const deleteGemach=async(id:number):Promise<void>=>{
     await client.delete(`/gemachim/${id}`);
 }
-export const getGemachItems=async(id:number,availableOnly?:boolean):Promise<Gemach>=>{
+export const getGemachItems=async(id:number,availableOnly?:boolean):Promise<Item[]>=>{
     const response=await client.get(`/gemachim/${id}/items`,
         {params:availableOnly?{availableOnly:true}:undefined});
     return response.data
@@ -40,7 +40,7 @@ export const searchItem=async(filters:{q?:string;
     const response=await client.get(`/items/search`,{params:filters})
     return response.data
 }
-export const getCategories=async():Promise<String[]>=>{
-    const response=await client.get(`/category`)
+export const getCategories=async():Promise<string[]>=>{
+    const response=await client.get(`/categories`)
     return response.data
 }
