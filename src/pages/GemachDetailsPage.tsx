@@ -12,7 +12,6 @@ const GemachDetails = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const isManager = user?.id === gemach?.managerId;
     const [showAddItem, setShowAddItem] = useState(false);
 
     const { id } = useParams()
@@ -27,6 +26,7 @@ const GemachDetails = () => {
         queryKey: ["items", gemachId],
         queryFn: () => getGemachItems(gemachId),
     });
+    const isManager = user?.id === gemach?.managerId;
     const addItemMutation = useMutation({
         mutationFn: (data: ItemRequest) => createItem(gemachId, data),
         onSuccess: () => {
