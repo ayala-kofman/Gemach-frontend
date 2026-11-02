@@ -40,47 +40,92 @@ const GemachDetails = () => {
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ["items", gemachId] }),
     });
 
-    if (gemachLoading || itemsLoading) return <div>טוען...</div>;
-    if (!gemach) return <div>גמ"ח לא נמצא</div>;
+    if (gemachLoading || itemsLoading) return <div className="text-center py-12 text-gray-500">טוען...</div>;
+    if (!gemach) return <div className="text-center py-12 text-gray-500">גמ"ח לא נמצא</div>;
     return (
-        <div>
-            <h1>{gemach.name}</h1>
-            <p>עיר: {gemach.city}</p>
-            <p>כתובת: {gemach.address}</p>
-            <p>טלפון: {gemach.phone}</p>
-            <p>קטגוריה: {gemach.category}</p>
-            {gemach.openingHours && <p>שעות פעילות: {gemach.openingHours}</p>}
-            {gemach.description && <p>תיאור: {gemach.description}</p>}
-
-            <h2>חפצים</h2>
-            {items?.length === 0 ? (<p>אין חפצין</p>) : (
-                <ul>
-                    {items?.map((item) => (<li key={item.id}>
-                        <strong>{item.name}</strong>-{item.category}
-                        <span>|{item.isAvailable ? `זמין(${item.availableQuantity})` : "מושאל"}</span>
-                        {isManager && (<button onClick={() => deleteItemMutation.mutate(item.id)}>מחק</button>)}
-                    </li>))}
-                </ul>)}
-            {isManager && (
-                <div>
-                    <button onClick={() => setShowAddItem(!showAddItem)}>
-                        {showAddItem ? "ביטול" : "+ הוסף חפץ"}
-                    </button>
-                    {showAddItem && (
-                        <form onSubmit={handleSubmit((data) => addItemMutation.mutate(data))}>
-                            <input {...register("name", { required: "שדה חובה" })} placeholder="שם חפץ" />
-                            {errors.name && <p>{errors.name.message}</p>}
-                            <input type="number" {...register("totalQuantity", { required: "שדה חובה", valueAsNumber: true, min: 1 })} placeholder="כמות" />
-                            <input {...register("category", { required: "שדה חובה" })} placeholder="קטגוריה" />
-                            <input {...register("description")} placeholder="תיאור (רשות)" />
-                            <button type="submit" disabled={addItemMutation.isPending}>הוסף</button>
-                        </form>
+        <div className="max-w-3xl mx-auto p-6">
+            <div className="bg-white rounded-xl shadow p-6 mb-6">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h1 className="text-2xl font-bold text-blue-700">{gemach.name}</h1>
+                        <span className="inline-block bg-blue-100 text-blue-700 text-sm px-2 py-1 rounded mt-1">{gemach.category}</span>
+                    </div>
+                    {isManager && (
+                        <button onClick={() => navigate(`/gemachim/${gemachId}/edit`)}
+                            className="bg-gray-100 text-gray-700 px-3 py-1 rounded hover:bg-gray-200 text-sm">
+                            ✏️ ערוך
+                        </button>
                     )}
                 </div>
-            )}
+                <div className="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-600">
+                    <p>📍 {gemach.city} — {gemach.address}</p>
+                    <p>📞 {gemach.phone}</p>
+                    {gemach.openingHours && <p>🕐 {gemach.openingHours}</p>}
+                    {gemach.description && <p className="col-span-2">{gemach.description}</p>}
+                </div>
+            </div>
 
-            {isManager && (<button onClick={() => navigate(`/gemachim/${gemachId}/edit`)}>ערוך גמ"ח</button>)}
+            <div className="bg-white rounded-xl shadow p-6">
+                <h2 className="text-xl font-semibold text-gray-800 mb-4">חפצים</h2>
+                {items?.length === 0 ? (
+                    <p className="text-gray-400">אין חפצים</p>
+                ) : (
+                    <ul className="divide-y">
+                        {items?.map((item) => (
+                            <li key={item.id} className="py-3 flex justify-between items-center">
+                                <div>
+                                    <span className="font-medium text-gray-800">{item.name}</span>
+                                    <span className="text-gray-400 text-sm mr-2">· {item.category}</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className={`text-sm px-2 py-1 rounded ${item.isAvailable ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                                        {item.isAvailable ? `זמין (${item.availableQuantity})` : "מושאל"}
+                                    </span>
+                                    {isManager && (
+                                        <button onClick={() => deleteItemMutation.mutate(item.id)}
+                                            className="text-red-500 hover:text-red-700 text-sm">מחק</button>
+                                    )}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
+                {isManager && (
+                    <div className="mt-4">
+                        <button onClick={() => setShowAddItem(!showAddItem)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                            {showAddItem ? "ביטול" : "+ הוסף חפץ"}
+                        </button>
+                        {showAddItem && (
+                            <form onSubmit={handleSubmit((data) => addItemMutation.mutate(data))} className="mt-4 grid grid-cols-2 gap-3">
+                                <div>
+                                    <input {...register("name", { required: "שדה חובה" })} placeholder="שם חפץ"
+                                        className="w-full border rounded px-3 py-2" />
+                                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+                                </div>
+                                <div>
+                                    <input {...register("category", { required: "שדה חובה" })} placeholder="קטגוריה"
+                                        className="w-full border rounded px-3 py-2" />
+                                    {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>}
+                                </div>
+                                <div>
+                                    <input type="number" {...register("totalQuantity", { required: "שדה חובה", valueAsNumber: true, min: 1 })} placeholder="כמות"
+                                        className="w-full border rounded px-3 py-2" />
+                                </div>
+                                <div>
+                                    <input {...register("description")} placeholder="תיאור (רשות)"
+                                        className="w-full border rounded px-3 py-2" />
+                                </div>
+                                <button type="submit" disabled={addItemMutation.isPending}
+                                    className="col-span-2 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 disabled:opacity-50">
+                                    {addItemMutation.isPending ? "שומר..." : "הוסף חפץ"}
+                                </button>
+                            </form>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>);
 };
 

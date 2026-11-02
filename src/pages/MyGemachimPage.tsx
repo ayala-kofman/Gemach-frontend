@@ -8,24 +8,40 @@ const MyGemachim = () => {
         queryKey: ["my-gemachim"],
         queryFn: getMyGemachim,
     });
-    if (isLoading) return <div>טוען...</div>;
+    if (isLoading) return <div className="text-center py-12 text-gray-500">טוען...</div>;
 
     return (
-        <div>
-            <h1>הגמ"חים שלי</h1>
-            <button onClick={() => navigate("/gemachim/new")}>+ הוסף גמ"ח</button>
+        <div className="max-w-3xl mx-auto p-6">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold text-blue-700">הגמ"חים שלי</h1>
+                <button onClick={() => navigate("/gemachim/new")}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    + הוסף גמ"ח
+                </button>
+            </div>
             {gemachim?.length === 0 ? (
-                <p>אין גמ"חים עדיין</p>
+                <div className="bg-white rounded-xl shadow p-8 text-center text-gray-400">אין גמ"חים עדיין</div>
             ) : (
-                <ul>
+                <div className="grid gap-4">
                     {gemachim?.map((gemach) => (
-                        <li key={gemach.id}>
-                            <strong>{gemach.name}</strong> — {gemach.city}
-                            <button onClick={() => navigate(`/gemachim/${gemach.id}`)}>פרטים</button>
-                            <button onClick={() => navigate(`/gemachim/${gemach.id}/edit`)}>ערוך</button>
-                        </li>
+                        <div key={gemach.id} className="bg-white rounded-xl shadow p-4 flex justify-between items-center">
+                            <div>
+                                <h2 className="font-semibold text-gray-800">{gemach.name}</h2>
+                                <p className="text-gray-500 text-sm">{gemach.city} · {gemach.category}</p>
+                            </div>
+                            <div className="flex gap-2">
+                                <button onClick={() => navigate(`/gemachim/${gemach.id}`)}
+                                    className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 text-sm">
+                                    פרטים
+                                </button>
+                                <button onClick={() => navigate(`/gemachim/${gemach.id}/edit`)}
+                                    className="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg hover:bg-gray-200 text-sm">
+                                    ערוך
+                                </button>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );

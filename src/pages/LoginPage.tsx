@@ -21,18 +21,31 @@ const Login = () => {
         }
     })
 
-    return <form onSubmit={handleSubmit(data=>mutate(data))}>
-        <div>
-            <label htmlFor="email">מייל</label>
-            <input id="email" type="email" {...register("email", { required: "יש להזין כתובת מייל ", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "כתובת מייל אינה תקינה" } })} />
-            {errors.email?.message}
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-cream">
+            <form onSubmit={handleSubmit(data => mutate(data))} className="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+                <h1 className="text-2xl font-bold text-dark mb-6 text-center">התחברות</h1>
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">מייל</label>
+                    <input id="email" type="email"
+                        {...register("email", { required: "יש להזין כתובת מייל", pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "כתובת מייל אינה תקינה" } })}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                    {errors.email && <p className="text-primary text-sm mt-1">{errors.email.message}</p>}
+                </div>
+                <div className="mb-6">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">סיסמה</label>
+                    <input id="password" type="password"
+                        {...register("password", { required: "יש להזין סיסמה", minLength: { value: 8, message: "יש להזין לפחות 8 תווים" } })}
+                        className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
+                    {errors.password && <p className="text-primary text-sm mt-1">{errors.password.message}</p>}
+                </div>
+                {error && <p className="text-primary text-sm mb-4 text-center">התחברות נכשלה, בדקי את הפרטים</p>}
+                <button type="submit" disabled={isPending}
+                    className="w-full bg-primary text-cream py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition">
+                    {isPending ? "מתחבר..." : "התחבר"}
+                </button>
+            </form>
         </div>
-        <div>
-            <label htmlFor="password">סיסמה</label>
-            <input id="password" type="text" {...register("password", { required: "יש להזין סיסמה ", minLength: { value: 8, message: "יש להזין לפחות 8 תווים" } })} />
-            {errors.password?.message}
-        </div>
-        <button type="submit">התחבר</button>
-    </form>
+    )
 }
 export default Login

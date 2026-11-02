@@ -30,51 +30,57 @@ const GemachForm = () => {
         onSuccess: (data) => navigate(`/gemachim/${data.id}`),
     });
 
+    const inputClass = "w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400";
+    const labelClass = "block text-sm font-medium text-gray-700 mb-1";
+
     return (
-        <form onSubmit={handleSubmit((data) => mutation.mutate(data))}>
-            <h1>{isEdit ? "עריכת גמ\"ח" : "הוספת גמ\"ח"}</h1>
-            <div>
-                <label>שם:</label>
-                <input {...register("name", { required: "שדה חובה" })} />
-                {errors.name && <p>{errors.name.message}</p>}
-            </div>
-            <div>
-                <label>עיר:</label>
-                <input {...register("city", { required: "שדה חובה" })} />
-                {errors.city && <p>{errors.city.message}</p>}
-            </div>
-            <div>
-                <label>כתובת:</label>
-                <input {...register("address", { required: "שדה חובה" })} />
-                {errors.address && <p>{errors.address.message}</p>}
-            </div>
-            <div>
-                <label>טלפון:</label>
-                <input {...register("phone", { required: "שדה חובה" })} />
-                {errors.phone && <p>{errors.phone.message}</p>}
-            </div>
-            <div>
-                <label>קטגוריה:</label>
-                <select {...register("category", { required: "שדה חובה" })}>
-                    <option value="">בחר קטגוריה</option>
-                    {categories?.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                </select>
-                {errors.category && <p>{errors.category.message}</p>}
-            </div>
-            <div>
-                <label>שעות פעילות:</label>
-                <input {...register("openingHours")} />
-            </div>
-            <div>
-                <label>תיאור:</label>
-                <textarea {...register("description")} />
-            </div>
-            <button type="submit" disabled={mutation.isPending}>
-                {mutation.isPending ? "שומר..." : isEdit ? "שמור שינויים" : "הוסף גמ\"ח"}
-            </button>
-        </form>
+        <div className="max-w-xl mx-auto p-6">
+            <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="bg-white rounded-xl shadow p-6">
+                <h1 className="text-2xl font-bold text-blue-700 mb-6">{isEdit ? "עריכת גמ\"ח" : "הוספת גמ\"ח"}</h1>
+                <div className="mb-4">
+                    <label className={labelClass}>שם</label>
+                    <input {...register("name", { required: "שדה חובה" })} className={inputClass} />
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className={labelClass}>עיר</label>
+                    <input {...register("city", { required: "שדה חובה" })} className={inputClass} />
+                    {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className={labelClass}>כתובת</label>
+                    <input {...register("address", { required: "שדה חובה" })} className={inputClass} />
+                    {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className={labelClass}>טלפון</label>
+                    <input {...register("phone", { required: "שדה חובה" })} className={inputClass} />
+                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className={labelClass}>קטגוריה</label>
+                    <select {...register("category", { required: "שדה חובה" })} className={inputClass}>
+                        <option value="">בחר קטגוריה</option>
+                        {categories?.map((cat) => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                    {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
+                </div>
+                <div className="mb-4">
+                    <label className={labelClass}>שעות פעילות (רשות)</label>
+                    <input {...register("openingHours")} className={inputClass} />
+                </div>
+                <div className="mb-6">
+                    <label className={labelClass}>תיאור (רשות)</label>
+                    <textarea {...register("description")} className={`${inputClass} h-24 resize-none`} />
+                </div>
+                <button type="submit" disabled={mutation.isPending}
+                    className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition">
+                    {mutation.isPending ? "שומר..." : isEdit ? "שמור שינויים" : "הוסף גמ\"ח"}
+                </button>
+            </form>
+        </div>
     );
 };
 
