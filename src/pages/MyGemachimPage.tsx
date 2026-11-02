@@ -13,9 +13,9 @@ const MyGemachim = () => {
     return (
         <div className="max-w-3xl mx-auto p-6">
             <div className="flex justify-between items-center mb-6">
-                <h1 className="text-2xl font-bold text-blue-700">הגמ"חים שלי</h1>
+                <h1 className="text-2xl font-bold text-dark">הגמ"חים שלי</h1>
                 <button onClick={() => navigate("/gemachim/new")}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    className="bg-primary text-cream px-4 py-2 rounded-lg hover:bg-secondary">
                     + הוסף גמ"ח
                 </button>
             </div>
@@ -31,7 +31,7 @@ const MyGemachim = () => {
                             </div>
                             <div className="flex gap-2">
                                 <button onClick={() => navigate(`/gemachim/${gemach.id}`)}
-                                    className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 text-sm">
+                                    className="bg-primary text-cream px-3 py-1 rounded-lg hover:bg-secondary text-sm">
                                     פרטים
                                 </button>
                                 <button onClick={() => navigate(`/gemachim/${gemach.id}/edit`)}

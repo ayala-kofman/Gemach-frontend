@@ -30,13 +30,13 @@ const GemachForm = () => {
         onSuccess: (data) => navigate(`/gemachim/${data.id}`),
     });
 
-    const inputClass = "w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400";
+    const inputClass = "w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary";
     const labelClass = "block text-sm font-medium text-gray-700 mb-1";
 
     return (
         <div className="max-w-xl mx-auto p-6">
             <form onSubmit={handleSubmit((data) => mutation.mutate(data))} className="bg-white rounded-xl shadow p-6">
-                <h1 className="text-2xl font-bold text-blue-700 mb-6">{isEdit ? "עריכת גמ\"ח" : "הוספת גמ\"ח"}</h1>
+                <h1 className="text-2xl font-bold text-dark mb-6">{isEdit ? "עריכת גמ\"ח" : "הוספת גמ\"ח"}</h1>
                 <div className="mb-4">
                     <label className={labelClass}>שם</label>
                     <input {...register("name", { required: "שדה חובה" })} className={inputClass} />
@@ -76,7 +76,7 @@ const GemachForm = () => {
                     <textarea {...register("description")} className={`${inputClass} h-24 resize-none`} />
                 </div>
                 <button type="submit" disabled={mutation.isPending}
-                    className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition">
+                    className="w-full bg-primary text-cream py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition">
                     {mutation.isPending ? "שומר..." : isEdit ? "שמור שינויים" : "הוסף גמ\"ח"}
                 </button>
             </form>

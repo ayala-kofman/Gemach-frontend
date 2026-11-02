@@ -30,7 +30,7 @@ const CustomerRequestPage = () => {
 
     return (
         <div className="max-w-xl mx-auto p-6">
-            <h1 className="text-2xl font-bold text-blue-700 mb-6">בקשה לפתוח גמ"ח</h1>
+            <h1 className="text-2xl font-bold text-dark mb-6">בקשה לפתוח גמ"ח</h1>
 
             {lastRequest && (
                 <div className={`rounded-xl p-4 mb-6 ${
@@ -63,13 +63,13 @@ const CustomerRequestPage = () => {
                                 minLength: { value: 3, message: "תיאור קצר מדי" },
                                 maxLength: { value: 500, message: "תיאור ארוך מדי" },
                             })}
-                            className="w-full border rounded-lg px-3 py-2 h-28 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="w-full border rounded-lg px-3 py-2 h-28 resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                         {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
                     </div>
                     {mutation.isError && <p className="text-red-500 text-sm mb-3">שגיאה בשליחה, נסי שוב</p>}
                     <button type="submit" disabled={mutation.isPending}
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition">
+                        className="w-full bg-primary text-cream py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition">
                         {mutation.isPending ? "שולח..." : "שלח בקשה"}
                     </button>
                 </form>

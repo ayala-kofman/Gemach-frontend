@@ -25,7 +25,7 @@ const HomePage = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-3xl font-bold text-blue-700 mb-6">מאגר הגמ"חים</h1>
+            <h1 className="text-3xl font-bold text-dark mb-6">מאגר הגמ"חים</h1>
 
             <div className="bg-white rounded-xl shadow p-4 mb-6 flex flex-wrap gap-3">
                 <input type="text" placeholder="חיפוש לפי שם..." value={q}
@@ -61,7 +61,7 @@ const HomePage = () => {
                                 <p className="text-gray-400 text-sm">{gemach.itemsCount} חפצים</p>
                             </div>
                             <button onClick={() => navigate(`/gemachim/${gemach.id}`)}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                className="bg-primary text-cream px-4 py-2 rounded-lg hover:bg-secondary transition">
                                 פרטים
                             </button>
                         </div>

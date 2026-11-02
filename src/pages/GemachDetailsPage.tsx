@@ -47,8 +47,8 @@ const GemachDetails = () => {
             <div className="bg-white rounded-xl shadow p-6 mb-6">
                 <div className="flex justify-between items-start">
                     <div>
-                        <h1 className="text-2xl font-bold text-blue-700">{gemach.name}</h1>
-                        <span className="inline-block bg-blue-100 text-blue-700 text-sm px-2 py-1 rounded mt-1">{gemach.category}</span>
+                        <h1 className="text-2xl font-bold text-dark">{gemach.name}</h1>
+                        <span className="inline-block bg-cream text-dark text-sm px-2 py-1 rounded mt-1">{gemach.category}</span>
                     </div>
                     {isManager && (
                         <button onClick={() => navigate(`/gemachim/${gemachId}/edit`)}
@@ -94,7 +94,7 @@ const GemachDetails = () => {
                 {isManager && (
                     <div className="mt-4">
                         <button onClick={() => setShowAddItem(!showAddItem)}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                            className="bg-primary text-cream px-4 py-2 rounded-lg hover:bg-secondary text-sm">
                             {showAddItem ? "ביטול" : "+ הוסף חפץ"}
                         </button>
                         {showAddItem && (
