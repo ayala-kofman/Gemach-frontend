@@ -1,3 +1,7 @@
-export interface ApiError{
-    error:string
+export interface ApiError {
+    error: {
+        code: string;
+        message: string;
+        details?: unknown;
+    };
 }
