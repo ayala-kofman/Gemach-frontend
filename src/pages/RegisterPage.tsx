@@ -50,8 +50,13 @@ const Register = () => {
                     <input id="phone" type="text" {...register("phone")}
                         className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary" />
                 </div>
+                {/* {error && <p className="text-primary text-sm mb-4 text-center"> */}
+                    {/* {error.response?.status === 409 ? "כתובת המייל כבר קיימת במערכת" : "ההרשמה נכשלה, נסי שוב"} */}
+                {/* </p>} */}
                 {error && <p className="text-primary text-sm mb-4 text-center">
-                    {error.response?.status === 409 ? "כתובת המייל כבר קיימת במערכת" : "ההרשמה נכשלה, נסי שוב"}
+                    {error.response?.status === 409
+                        ? "כתובת המייל כבר קיימת במערכת"
+                        : error.response?.data?.error?.message ?? "ההרשמה נכשלה, נסי שוב"}
                 </p>}
                 <button type="submit" disabled={isPending}
                     className="w-full bg-primary text-cream py-2 rounded-lg hover:bg-secondary disabled:opacity-50 transition">
