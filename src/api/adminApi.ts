@@ -1,8 +1,7 @@
 import client from "./client";
 import type { PaginatedResponse } from "../types/paginatedResponse"
 import type { ManagerRequest } from "../types/managerRequest";
-import type { Role } from "../types/role";
-import type { User, } from "../types/user";
+
 
 export const getRequests = async (status?: string): Promise<PaginatedResponse<ManagerRequest>> => {
     const response = await client.get(`/manager-requests`, { params: status ? { status } : undefined })

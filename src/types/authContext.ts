@@ -1,5 +1,5 @@
 import type {User} from "./user"
-import type {LoginRequest, LoginResponse} from "./auth"
+import type { LoginResponse} from "./auth"
 export interface AuthContextType{
     user:User|null,
     token:string|null,
